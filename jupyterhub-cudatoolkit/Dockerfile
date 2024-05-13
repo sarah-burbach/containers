@@ -29,7 +29,9 @@ RUN conda config --remove channels defaults
 RUN conda update --force conda
 RUN conda install --yes nvidia/label/cuda-12.2.2::cuda-toolkit \
     && conda install --yes gxx=11.4 \
-    && conda clean --all -f -y
+    && conda clean --all -f -y \
+    && fix-permissions "${CONDA_DIR}" \
+    && fix-permissions "/home/${NB_USER}"
 
 # switch to NB_USER to install python packages
 USER ${NB_UID}
